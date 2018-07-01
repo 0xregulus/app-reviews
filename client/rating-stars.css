@@ -1,0 +1,27 @@
+.rating-container {
+
+}
+
+.rating-comment-container {
+    
+}
+
+.rating-stars-container .button {
+    cursor: pointer
+}
+
+.rating-stars-container .button .material-icons {
+    font-size: 30px
+}
+
+.rating-stars-container .star-button {
+    text-shadow: .06em .04em #000
+}
+
+.rating-stars-container .star-button.star-on .material-icons {
+    color: #ee9a00
+}
+
+.rating-stars-container .star-button.star-off .material-icons {
+    color: #ddd
+}
