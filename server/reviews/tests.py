@@ -127,3 +127,42 @@ class TestReviewAPI(APITestCase):
         self.assertEqual(response.json()[0].get('user'), review.user.id)
         self.assertEqual(response.json()[0].get('rating'), review.rating)
         self.assertEqual(response.json()[0].get('comment'), review.comment)
+
+
+class TestAdminReviewAPI(APITestCase):
+
+    def setUp(self):
+        self.username = 'testuser'
+        self.password = 'insertstrongpassword'
+        self.user = User.objects.create_user(
+            self.username, 'user@test.com', self.password
+        )
+        self.user.is_staff = True
+        self.user.save()
+        for r in range(MIN_RATING_VALUE, MAX_RATING_VALUE + 1):
+            user = User.objects.create_user(
+            'testuser{}'.format(r), 'user{}@test.com'.format(r), 'insertstrongpassword'
+            )
+            Review.objects.create(user=user, rating=r, comment='Comment {}'.format(r))
+        self.client = APIClient()
+
+    def test_list_reviews(self):
+        url = reverse('admin-reviews-list')
+
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertNotEqual(len(response.json()), 0)
+
+    def test_stats_reviews(self):
+        url = reverse('admin-reviews-stats')
+
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json().get('total_reviews'), MAX_RATING_VALUE)
+        self.assertEqual(
+            response.json().get('avg_rating'),
+            sum([i for i in range(MIN_RATING_VALUE, MAX_RATING_VALUE + 1)]) / MAX_RATING_VALUE
+        )
+        for r in range(MIN_RATING_VALUE, MAX_RATING_VALUE + 1):
+            self.assertEqual(response.json().get('total_{}_rates'.format(r)), 1)
+            self.assertEqual(response.json().get('avg_{}_rates'.format(r)), r)

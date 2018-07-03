@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="appReviews">
+
+<head>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="rating-stars.css"/>
+</head>
+
+<body>
+
+    <div id="login-holder" ng-controller="loginCtrl">
+        <form>
+            <label>Username</label>
+            <input type="text" ng-model="username">
+            <label>Password</label>
+            <input type="password" ng-model="password">
+            <br>
+            <input type="submit" ng-click="login(username, password)">
+        </form>
+    </div>
+
+    <div id="main" ng-controller="reviewCtrl" style="display: none;">
+        <div style="padding: 20px">
+            <rating-stars max-rating="5" on-rating="onRating(rating, comment)">
+            </rating-stars>
+        </div>
+    </div>
+
+    <div id="admin" ng-controller="adminCtrl" style="display: none;">
+        <div google-chart chart="reviewChart" style="height:600px; width:100%;"></div>
+        <hr>
+        <ul>
+            <li ng-repeat="r in reviews">
+                {{ r.rating }} - {{ r.comment }} by {{ r.user }}
+            </li>
+        </ul>
+    </div>
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/angular-google-chart/ng-google-chart.min.js"></script>
+    <script src="rating-stars.js"></script>
+    <script src="services.js"></script>
+    <script src="controllers.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>

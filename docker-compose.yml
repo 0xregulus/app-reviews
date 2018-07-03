@@ -1,0 +1,14 @@
+version: '2'
+services:
+
+    server:
+        image: app_review_server
+        build:
+            context: ./
+            dockerfile: server/Dockerfile
+
+    client:
+        image: app_review_client
+        build:
+            context: ./
+            dockerfile: client/Dockerfile

@@ -1,0 +1,27 @@
+{
+  "name": "app_reviews",
+  "homepage": "https://github.com/facundo-rodriguez-17/app-reviews",
+  "authors": [
+    "Facundo Rodriguez"
+  ],
+  "description": "app_reviews client",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.5.11",
+    "angular-animate": "1.5.11",
+    "angular-aria": "1.5.11",
+    "angular-resource": "1.5.11",
+    "angular-material": "~1.0.9",
+    "angular-google-chart": "1.0.0-beta.1"
+  },
+  "resolutions": {
+    "angular": "1.5.11"
+  }
+}
