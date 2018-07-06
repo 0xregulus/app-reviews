@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import csv
+
+from django.http import HttpResponse
+
 from rest_framework import generics
 from rest_framework.viewsets import ViewSet
 from rest_framework.decorators import list_route
@@ -35,4 +39,12 @@ class AdminReviews(ViewSet):
 
     @list_route(methods=['GET'], url_path='csv')
     def csv(self, request, *args, **kwargs):
-        pass
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="ratings.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Rating', 'Comment', 'User', 'Date'])
+        for r in self.queryset:
+            writer.writerow([r.rating, r.comment, r.user.email, r.date_created])
+
+        return response

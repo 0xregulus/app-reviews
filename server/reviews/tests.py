@@ -153,6 +153,13 @@ class TestAdminReviewAPI(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertNotEqual(len(response.json()), 0)
 
+    def test_csv_reviews(self):
+        url = reverse('admin-reviews-csv')
+
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertNotEqual(len(response.content), 0)
+
     def test_stats_reviews(self):
         url = reverse('admin-reviews-stats')
 

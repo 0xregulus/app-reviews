@@ -51,8 +51,11 @@ myControllers.controller('reviewCtrl', function($rootScope, $scope, Review) {
     };
 });
 
-myControllers.controller('adminCtrl', function($scope, Admin) {
-    $scope.reviewChart = {type: "PieChart", options: {title: "Lifetime totals"}};
+myControllers.controller('adminCtrl', function($scope, $window, Admin) {
+    $scope.reviewChart = {type: "BarChart", options: {title: "Lifetime totals"}};
+    $scope.review7Chart = {type: "BarChart", options: {title: "Last week totals"}};
+    $scope.review30Chart = {type: "BarChart", options: {title: "Last 30 days totals"}};
+    $scope.review90Chart = {type: "BarChart", options: {title: "Last 90 days totals"}};
     Admin.stats(
         {},
         function(response) {
@@ -84,16 +87,97 @@ myControllers.controller('adminCtrl', function($scope, Admin) {
                     ]}
                 ]
             };
+            $scope.review7Chart.data = {
+                "cols": [
+                    {id: "s", label: "Stars", type: "string"},
+                    {id: "t", label: "Total rates", type: "number"}
+                ], "rows": [
+                    {c: [
+                        {v: "1 Star"},
+                        {v: $scope.stats.stats_last_7_days.total_1_rates},
+                    ]},
+                    {c: [
+                        {v: "2 Stars"},
+                        {v: $scope.stats.stats_last_7_days.total_2_rates},
+                    ]},
+                    {c: [
+                        {v: "3 Stars"},
+                        {v: $scope.stats.stats_last_7_days.total_3_rates},
+                    ]},
+                    {c: [
+                        {v: "4 Stars"},
+                        {v: $scope.stats.stats_last_7_days.total_4_rates},
+                    ]},
+                    {c: [
+                        {v: "5 Stars"},
+                        {v: $scope.stats.stats_last_7_days.total_5_rates},
+                    ]}
+                ]
+            };
+            $scope.review30Chart.data = {
+                "cols": [
+                    {id: "s", label: "Stars", type: "string"},
+                    {id: "t", label: "Total rates", type: "number"}
+                ], "rows": [
+                    {c: [
+                        {v: "1 Star"},
+                        {v: $scope.stats.stats_last_30_days.total_1_rates},
+                    ]},
+                    {c: [
+                        {v: "2 Stars"},
+                        {v: $scope.stats.stats_last_30_days.total_2_rates},
+                    ]},
+                    {c: [
+                        {v: "3 Stars"},
+                        {v: $scope.stats.stats_last_30_days.total_3_rates},
+                    ]},
+                    {c: [
+                        {v: "4 Stars"},
+                        {v: $scope.stats.stats_last_30_days.total_4_rates},
+                    ]},
+                    {c: [
+                        {v: "5 Stars"},
+                        {v: $scope.stats.stats_last_30_days.total_5_rates},
+                    ]}
+                ]
+            };
+            $scope.review90Chart.data = {
+                "cols": [
+                    {id: "s", label: "Stars", type: "string"},
+                    {id: "t", label: "Total rates", type: "number"}
+                ], "rows": [
+                    {c: [
+                        {v: "1 Star"},
+                        {v: $scope.stats.stats_last_90_days.total_1_rates},
+                    ]},
+                    {c: [
+                        {v: "2 Stars"},
+                        {v: $scope.stats.stats_last_90_days.total_2_rates},
+                    ]},
+                    {c: [
+                        {v: "3 Stars"},
+                        {v: $scope.stats.stats_last_90_days.total_3_rates},
+                    ]},
+                    {c: [
+                        {v: "4 Stars"},
+                        {v: $scope.stats.stats_last_90_days.total_4_rates},
+                    ]},
+                    {c: [
+                        {v: "5 Stars"},
+                        {v: $scope.stats.stats_last_90_days.total_5_rates},
+                    ]}
+                ]
+            };
         },
         function(error) {
             console.log(error);
             alert('Oops! Somothing went wrong.');
         }
     );
+
     Admin.list(
         {},
         function(response) {
-            console.log(response);
             $scope.reviews = response;
         },
         function(error) {
@@ -101,4 +185,9 @@ myControllers.controller('adminCtrl', function($scope, Admin) {
             alert('Oops! Somothing went wrong.');
         }
     );
+
+    $scope.csv = function() {
+        $window.open('http://localhost:8000/admin-reviews/csv/', '_blank');
+    };
+
 });

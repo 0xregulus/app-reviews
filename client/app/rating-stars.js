@@ -19,12 +19,12 @@ function() {
             }
             return starsArray
         }, that.setRating = function(rating, comment) {
-            that.rating = rating, that.validateStars(that.rating), $timeout(function() {
-                that.onRating({
-                    rating: that.rating,
-                    comment: that.comment
-                }), $scope.$apply()
-            })
+            that.rating = rating, that.validateStars(that.rating)
+        }, that.postRating = function(rating, comment) {
+            that.onRating({
+                rating: rating,
+                comment: comment
+            }), $scope.$apply()
         }, that.setMouseOverRating = function(rating) {
             that.validateStars(rating)
         }, that.validateStars = function(rating) {
@@ -67,6 +67,6 @@ function() {
 }(),
 function() {
     angular.module("angularRatingStars.templates", []).run(["$templateCache", function($templateCache) {
-        $templateCache.put("rating-stars-directive.html", '<div class="rating-container" layout="column"><div class="rating-stars-container" layout="row"><a class="button star-button" ng-class="item.class" ng-mouseover="ctrl.setMouseOverRating($index + 1)" ng-mouseleave="ctrl.setMouseOverRating(ctrl.rating)" ng-click="ctrl.setRating($index + 1, ctrl.comment)" ng-repeat="item in ctrl.starsArray" ><i class="material-icons">star</i></div><div class="rating-comment-container" layout="row"></a><textarea ng-model="ctrl.comment" rows="4" cols="40"></textarea></div>')
+        $templateCache.put("rating-stars-directive.html", '<div class="rating-container" layout="column"><div class="rating-stars-container" layout="row"><a class="button star-button" ng-class="item.class" ng-mouseover="ctrl.setMouseOverRating($index + 1)" ng-mouseleave="ctrl.setMouseOverRating(ctrl.rating)" ng-click="ctrl.setRating($index + 1)" ng-repeat="item in ctrl.starsArray" ><i class="material-icons">star</i></div><div class="rating-comment-container" layout="row"></a><textarea ng-model="ctrl.comment" rows="4" cols="40"></textarea><md-button class="md-raised md-primary" ng-click="ctrl.postRating(ctrl.rating, ctrl.comment)">Rate!</md-button></div>')
     }])
 }();

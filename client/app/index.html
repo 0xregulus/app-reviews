@@ -29,7 +29,11 @@
 
     <div id="admin" ng-controller="adminCtrl" style="display: none;">
         <div google-chart chart="reviewChart" style="height:600px; width:100%;"></div>
+        <div google-chart chart="review7Chart" style="height:600px; width:100%;"></div>
+        <div google-chart chart="review30Chart" style="height:600px; width:100%;"></div>
+        <div google-chart chart="review90Chart" style="height:600px; width:100%;"></div>
         <hr>
+        <button type="submit" ng-click="csv()">Download CSV</button>
         <ul>
             <li ng-repeat="r in reviews">
                 {{ r.rating }} - {{ r.comment }} by {{ r.user }}
