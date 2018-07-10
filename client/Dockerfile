@@ -6,10 +6,8 @@ RUN apk update && \
     npm install -g bower grunt-cli && \
     echo '{ "allow_root": true }' > /root/.bowerrc
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY /client/nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /usr/share/nginx/html
-COPY app/ .
+COPY /client/app/ .
 RUN bower install
-
-CMD ["nginx", "-g", "daemon off;"]
